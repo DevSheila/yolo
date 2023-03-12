@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 
 services:
   backend:
@@ -8,7 +8,7 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      - backend-data:/backend/node_modules
+      - backend-data:/backend/
     networks:
       - yolo-network
 
@@ -19,7 +19,7 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - client-data:/client/node_modules
+      - client-data:/client/
     networks:
       - yolo-network
 
