@@ -1,5 +1,6 @@
 ./backend/node_modules
 ./client/node_modules
-Dockerfile
-docker-compose.yml
+
 .dockerignore
+docker-compose.yml
+Dockerfile
