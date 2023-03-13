@@ -1,0 +1,57 @@
+version: "3.7"
+
+# Define the services that make up the YOLO application
+services:
+  # Frontend service, based on the "yolo-client" Docker image
+  frontend:
+    # Use the "yolo-client" image from Docker Hub
+    image: sheilaasharon/yolo-client:1.0.0
+    # Open the standard input of the container
+    stdin_open: true
+    # Map port 3000 of the host to port 3000 of the container
+    ports:
+      - "3000:3000"
+    # Link to the "backend" and "mongo" services
+    links:
+      - backend
+      - mongo
+    # Use the "react-node-app" network
+    networks:
+      - react-node-app
+
+  # Backend service, based on the "yolo-backend" Docker image
+  backend:
+    # Use the "yolo-backend" image from Docker Hub
+    image: sheilaasharon/yolo-backend:1.0
+    # Map port 5000 of the host to port 5000 of the container
+    ports:
+      - "5000:5000"
+    # Link to the "mongo" service
+    links:
+      - mongo
+    # Use the "react-node-app" network
+    networks:
+      - react-node-app
+
+  # Mongo service, based on the official "mongo" Docker image
+  mongo:
+    # Use the official "mongo" image from Docker Hub
+    image: mongo:3.6.19-xenial
+    # Map port 27017 of the host to port 27017 of the container
+    ports:
+      - "27017:27017"
+    # Use the "react-node-app" network
+    networks:
+      - react-node-app
+    # Mount a volume to persist the Mongo data
+    volumes:
+      - mongo-data:/data/db
+
+# Define a volume to persist the Mongo data
+volumes:
+  mongo-data:
+
+# Define a network for the YOLO application
+networks:
+  react-node-app:
+    driver: bridge
