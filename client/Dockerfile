@@ -13,7 +13,7 @@ RUN npm install
 # Copy the rest of the client  application files to the working directory
 COPY . .
 
-#  Expose port 5000 for the application
+#  Expose port 3000 for the application
 EXPOSE 3000
 
 # Start the application
