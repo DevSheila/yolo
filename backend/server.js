@@ -8,6 +8,7 @@ const productRoute = require('./routes/api/productRoute');
 require('dotenv').config()
 ;
 // Connecting to the Database
+// let mongodb_url = 'mongodb://localhost/';
 let mongodb_url = 'mongodb://localhost/';
 let dbName = 'yolomy';
 
