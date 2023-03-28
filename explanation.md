@@ -124,3 +124,58 @@ Vagrant.configure("2") do |config|
 end
 
 ```
+
+### Playbook.yml
+The playbook.yml file defines the tasks that Ansible will execute on the managed hosts. We start by installing Docker and Docker Compose, then cloning the repository that contains the web application. We then use Docker Compose to build and run the frontend and backend containers, which are configured in their own unique roles.
+
+Variables were used to define the app name and port numbers, which are used throughout the playbook. We also use blocks and tags for ease of assessment and as a good coding practice. Finally, we use roles to separate the frontend and backend logic/containerization.
+```
+# Defines the tasks that Ansible will execute on the managed hosts
+- hosts: all # Specifies the hosts to manage (in this case, all hosts in the inventory file)
+  become: yes # Gives Ansible root privileges on the managed hosts
+  vars: # Defines variables that can be used throughout the playbook
+    app_name: "{{ app_name }}" # Uses the app name specified in the Vagrantfile
+    frontend_port: "80" # Specifies the port to use for the frontend container
+    backend_port: "3000" # Specifies the port to use for the backend container
+  tasks:
+    - name: Install Docker # Installs Docker on the managed hosts
+      become: yes
+      apt:
+        name: docker.io
+        state: present
+
+    - name: Install Docker Compose # Installs Docker Compose on the managed hosts
+      become: yes
+      apt:
+        name: docker-compose
+        state: present
+
+    - name: Clone repository # Clones the repository containing the web application
+      become: yes
+      git:
+        repo: https://github.com/DevSheila/yolo.git
+        dest: "/opt/{{ app_name }}"
+
+    - name: Build and run frontend container # Builds and runs the frontend container
+      become: yes
+      docker_container:
+        name: frontend
+        image: devsheila/yolo-frontend:latest
+        state: started
+        ports:
+          - "{{ frontend_port }}:80"
+        volumes:
+          - "/opt/{{ app_name }}/frontend:/app"
+
+    - name: Build and run backend container # Builds and runs the backend container
+      become: yes
+      docker_container:
+        name: backend
+        image: devsheila/yolo-backend:latest
+        state: started
+        ports:
+          - "{{ backend_port }}:3000"
+        volumes:
+          - "/opt/{{ app_name }}/backend:/app"
+
+```
