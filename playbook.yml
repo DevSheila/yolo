@@ -22,3 +22,14 @@
       git:
         repo: https://github.com/DevSheila/yolo.git
         dest: "/opt/{{ app_name }}"
+
+    - name: Build and run frontend container # Builds and runs the frontend container
+      become: yes
+      docker_container:
+        name: frontend
+        image: devsheila/yolo-frontend:latest
+        state: started
+        ports:
+          - "{{ frontend_port }}:80"
+        volumes:
+          - "/opt/{{ app_name }}/frontend:/app"
