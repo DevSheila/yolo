@@ -10,8 +10,15 @@
       apt:
         name: docker.io
         state: present
+
     - name: Install Docker Compose
         become: yes
         apt:
           name: docker-compose
           state: present
+
+    - name: Clone repository
+      become: yes
+      git:
+        repo: https://github.com/DevSheila/yolo.git
+        dest: "/opt/{{ app_name }}"
