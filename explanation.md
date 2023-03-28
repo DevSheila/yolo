@@ -91,3 +91,17 @@ networks:
     driver: bridge
 
 ```
+
+### Inventory file
+In this implementation, we use a Vagrantfile to provision a virtual machine running Ubuntu 20.04, with Ansible as the provisioning tool. We also define an inventory file to specify the hosts that Ansible will manage.
+```
+# Defines the inventory of hosts that Ansible will manage
+# In this case, we have only one host, which is the Vagrant virtual machine
+[vagrant]
+127.0.0.1 ansible_ssh_user=vagrant ansible_ssh_private_key_file=.vagrant/machines/default/virtualbox/private_key
+
+# Defines the inventory group for the frontend container
+[frontend]
+127.0.0.1
+
+```
