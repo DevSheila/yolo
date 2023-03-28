@@ -1,0 +1,12 @@
+- hosts: all
+  become: yes
+  vars:
+    app_name: "{{ app_name }}"
+    frontend_port: "80"
+    backend_port: "3000"
+  tasks:
+    - name: Install Docker
+      become: yes
+      apt:
+        name: docker.io
+        state: present
