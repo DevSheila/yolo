@@ -33,3 +33,14 @@
           - "{{ frontend_port }}:80"
         volumes:
           - "/opt/{{ app_name }}/frontend:/app"
+
+     -name: Build and run backend container # Builds and runs the backend container
+      become: yes
+      docker_container:
+        name: backend
+        image: devsheila/yolo-backend:latest
+        state: started
+        ports:
+          - "{{ backend_port }}:3000"
+        volumes:
+          - "/opt/{{ app_name }}/backend:/app"
