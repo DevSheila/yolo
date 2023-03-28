@@ -10,3 +10,8 @@
       apt:
         name: docker.io
         state: present
+    - name: Install Docker Compose
+        become: yes
+        apt:
+          name: docker-compose
+          state: present
