@@ -105,3 +105,22 @@ In this implementation, we use a Vagrantfile to provision a virtual machine runn
 127.0.0.1
 
 ```
+### Vagrantfile
+```
+# Defines the configuration for the Vagrant virtual machine
+Vagrant.configure("2") do |config|
+  config.vm.box = "geerlingguy/ubuntu2004" # Specifies the base box for the virtual machine
+  config.vm.network "forwarded_port", guest: 80, host: 8080 # Forwards port 80 on the virtual machine to port 8080 on the host machine
+  config.vm.provider "virtualbox" do |vb| # Defines the provider for the virtual machine (in this case, VirtualBox)
+    vb.memory = "2048" # Specifies the amount of memory to allocate for the virtual machine
+    vb.cpus = 2 # Specifies the number of CPUs to allocate for the virtual machine
+  end
+  config.vm.provision "ansible" do |ansible| # Configures Ansible as the provisioning tool
+    ansible.playbook = "playbook.yml" # Specifies the playbook to use for provisioning
+    ansible.extra_vars = { # Defines extra variables to pass to Ansible
+      app_name: "ecommerce_app" # Specifies the name of the application
+    }
+  end
+end
+
+```
