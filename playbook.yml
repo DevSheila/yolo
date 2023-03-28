@@ -12,10 +12,10 @@
         state: present
 
     - name: Install Docker Compose
-        become: yes
-        apt:
-          name: docker-compose
-          state: present
+      become: yes
+      apt:
+        name: docker-compose
+        state: present
 
     - name: Clone repository
       become: yes
@@ -23,7 +23,7 @@
         repo: https://github.com/DevSheila/yolo.git
         dest: "/opt/{{ app_name }}"
 
-    - name: Build and run frontend container # Builds and runs the frontend container
+    - name: Build and run frontend container
       become: yes
       docker_container:
         name: frontend
@@ -34,7 +34,7 @@
         volumes:
           - "/opt/{{ app_name }}/frontend:/app"
 
-     -name: Build and run backend container # Builds and runs the backend container
+    - name: Build and run backend container
       become: yes
       docker_container:
         name: backend
