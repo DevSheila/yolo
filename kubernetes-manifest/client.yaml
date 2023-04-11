@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: client
+  name: client-deployment
   labels:
     app: client
 spec:
@@ -17,16 +17,13 @@ spec:
       containers:
       - name: client
         image: sheilaasharon/yolo-client:1.0.0
-        env:
-        - name: MONGO_URI
-          value: "mongodb://mongo:27017/yolo"
         ports:
-        - containerPort: 8080
+        - containerPort: 3000
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: client
+  name: client-service
   labels:
     app: client
 spec:
@@ -34,5 +31,5 @@ spec:
     app: client
   ports:
   - name: client
-    port: 8080
-    targetPort: 8080
+    port: 80
+    targetPort: 3000
