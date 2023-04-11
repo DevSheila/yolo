@@ -25,6 +25,9 @@ spec:
       volumes:
       - name: mongo-data
         emptyDir: {}
+      imagePullSecrets:
+        - name: regcred
+      restartPolicy: Always
 ---
 apiVersion: v1
 kind: Service
