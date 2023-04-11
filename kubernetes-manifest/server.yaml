@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejs
+  labels:
+    app: nodejs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nodejs
+  template:
+    metadata:
+      labels:
+        app: nodejs
+    spec:
+      containers:
+      - name: nodejs
+        image: sheilasharon/yolo-backend:latest
+        env:
+        - name: MONGO_URI
+          value: "mongodb://mongo:27017/yolo"
+        ports:
+        - containerPort: 8080
+
