@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nodejs
+  name: client
   labels:
-    app: nodejs
+    app: client
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nodejs
+      app: client
   template:
     metadata:
       labels:
-        app: nodejs
+        app: client
     spec:
       containers:
-      - name: nodejs
+      - name: client
         image: sheilaasharon/yolo-client:1.0.0
         env:
         - name: MONGO_URI
@@ -26,13 +26,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: nodejs
+  name: client
   labels:
-    app: nodejs
+    app: client
 spec:
   selector:
-    app: nodejs
+    app: client
   ports:
-  - name: nodejs
+  - name: client
     port: 8080
     targetPort: 8080
