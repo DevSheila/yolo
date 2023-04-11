@@ -22,6 +22,9 @@ spec:
           value: "mongodb://mongo:27017/yolo"
         ports:
         - containerPort: 8080
+        imagePullSecrets:
+        - name: regcred
+        restartPolicy: Always
 
 ---
 apiVersion: v1
